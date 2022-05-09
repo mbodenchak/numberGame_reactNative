@@ -65,9 +65,24 @@ function GameScreen({ userNumber, onGameOver }) {
   const guessRoundsListLength = guessRounds.length;
 
   return (
-    <View view={styles.screen}>
+    <View style={styles.screen}>
       <Title>Opponent's Guess</Title>
       <NumberContainer>{currentGuess}</NumberContainer>
+      <View style={styles.listContainer}>
+        {/* {guessRounds.map((guessRound) => (
+          <Text key={guessRound}>{guessRound}</Text>
+        ))} */}
+        <FlatList
+          data={guessRounds}
+          renderItem={(itemData) => (
+            <GuessLogItem
+              roundNumber={guessRoundsListLength - itemData.index}
+              guess={itemData.item}
+            />
+          )}
+          keyExtractor={(item) => item}
+        />
+      </View>
       <Card>
         <InstructionText style={styles.instructionText}>
           Higher or Lower?
@@ -85,21 +100,6 @@ function GameScreen({ userNumber, onGameOver }) {
           </View>
         </View>
       </Card>
-      <View style={styles.listContainer}>
-        {/* {guessRounds.map((guessRound) => (
-          <Text key={guessRound}>{guessRound}</Text>
-        ))} */}
-        <FlatList
-          data={guessRounds}
-          renderItem={(itemData) => (
-            <GuessLogItem
-              roundNumber={guessRoundsListLength - itemData.index}
-              guess={itemData.item}
-            />
-          )}
-          keyExtractor={(item) => item}
-        />
-      </View>
     </View>
   );
 }
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     padding: 24,
-    // alignItems: "center",
+    alignItems: "center",
   },
   instructionText: {
     marginBottom: 12,
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   listContainer: {
-    // flex: 2,
+    flex: 1,
     padding: 16,
   },
 });
